@@ -45,3 +45,25 @@ class MbtiModelTest(TestCase):
         self.assertEqual(mbti.text, "ESTJ에 대한 설명입니다.")
         self.assertTrue(Mbti.objects.filter(id=mbti.id).exists())
 
+
+class SeedDataTest(TestCase):
+    def setUp(self):
+        call_command('load_data')
+
+    def test_question_data_loaded(self):
+        question = Question.objects.first()
+
+        self.assertIsNotNone(question)
+
+    def test_option_data_loaded(self):
+        question = Question.objects.first()
+        options = Option.objects.filter(question=question)
+
+        self.assertEqual(options.count(), 2)
+        self.assertEqual(abs(options.first().score), 1)
+
+    def test_mbti_data_loaded(self):
+        mbti = Mbti.objects.first()
+
+        self.assertIsNotNone(mbti)
+        self.assertEqual(len(mbti.mbti), 4)
