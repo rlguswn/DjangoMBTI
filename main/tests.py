@@ -1,5 +1,8 @@
 from django.core.management import call_command
 from django.test import TestCase
+from rest_framework import status
+from rest_framework.test import APITestCase
+
 from main.models import Question, Option, Mbti
 
 
@@ -67,3 +70,17 @@ class SeedDataTest(TestCase):
 
         self.assertIsNotNone(mbti)
         self.assertEqual(len(mbti.mbti), 4)
+
+
+class QuestionViewTest(APITestCase):
+    def setUp(self):
+        call_command('load_data')
+
+    def test_get_questions(self):
+        response = self.client.get('/mbti/question/')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        self.assertIsNotNone(response.data)
+        self.assertEqual(len(response.data[0]['options']), 2)
+
