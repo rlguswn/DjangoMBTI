@@ -84,3 +84,37 @@ class QuestionViewTest(APITestCase):
         self.assertIsNotNone(response.data)
         self.assertEqual(len(response.data[0]['options']), 2)
 
+
+class MbtiViewTest(APITestCase):
+    def setUp(self):
+        question1 = Question.objects.create(text="EI에 대한 질문", dimension="EI")
+        option1 = Option.objects.create(text="E", question=question1, score=1)
+        Option.objects.create(text="I", question=question1, score=-1)
+
+        question2 = Question.objects.create(text="SN에 대한 질문", dimension="SN")
+        option2 = Option.objects.create(text="S", question=question2, score=1)
+        Option.objects.create(text="N", question=question1, score=-1)
+
+        question3 = Question.objects.create(text="TF에 대한 질문", dimension="TF")
+        option3 = Option.objects.create(text="T", question=question3, score=1)
+        Option.objects.create(text="F", question=question1, score=-1)
+
+        question4 = Question.objects.create(text="JP에 대한 질문", dimension="JP")
+        option4 = Option.objects.create(text="J", question=question4, score=1)
+        Option.objects.create(text="P", question=question1, score=-1)
+
+        mbti = Mbti.objects.create(mbti="ESTJ", text="엄격한 관리자, 경영자")
+
+        self.valid_answers = {
+            str(question1.id): option1.id,
+            str(question2.id): option2.id,
+            str(question3.id): option3.id,
+            str(question4.id): option4.id,
+        }
+
+    def test_submit_valid_answers(self):
+        response = self.client.post('/mbti/submit/', {'answer': self.valid_answers}, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('mbti', response.data)
+        self.assertEqual(response.data['mbti'], 'ESTJ')
