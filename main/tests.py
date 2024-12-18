@@ -84,6 +84,13 @@ class QuestionViewTest(APITestCase):
         self.assertIsNotNone(response.data)
         self.assertEqual(len(response.data[0]['options']), 2)
 
+    def test_get_questions_empty(self):
+        Question.objects.all().delete()
+
+        response = self.client.get('/mbti/question/')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data, {"error": "No questions found in DB"})
+
 
 class MbtiViewTest(APITestCase):
     def setUp(self):
@@ -118,3 +125,27 @@ class MbtiViewTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('mbti', response.data)
         self.assertEqual(response.data['mbti'], 'ESTJ')
+
+    def test_submit_invalid_answers(self):
+        response = self.client.post('/mbti/submit/', {'answer': 'invalid'}, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data, {"error": "Invalid format for 'answer'."})
+
+    def test_submit_nonexistent_option_id(self):
+        invalid_answers = self.valid_answers.copy()
+        invalid_answers[list(invalid_answers.keys())[0]] = 9999
+
+        response = self.client.post('/mbti/submit/', {'answer': invalid_answers}, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data, {"error": "Option_id '9999' does not exist."})
+
+    def test_submit_nonexistent_mbti_result(self):
+        invalid_answers = self.valid_answers.copy()
+        invalid_answers[list(invalid_answers.keys())[0]] = Option.objects.filter(score=-1).first().id
+
+        response = self.client.post('/mbti/submit/', {'answer': invalid_answers}, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data, {"error": "MBTI 'ISTJ' does not exist."})
