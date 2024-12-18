@@ -15,7 +15,7 @@ class QuestionView(APIView):
         try:
             queryset = Question.objects.prefetch_related('option_set').all()
             if not queryset.exists():
-                return Response({"erorr": "No questions found in DB"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": "No questions found in DB"}, status=status.HTTP_400_BAD_REQUEST)
 
             serializer = QuestionSerializer(queryset, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -34,7 +34,8 @@ class MbtiView(APIView):
         try:
             answers = request.data.get('answer')
             if not answers or not isinstance(answers, dict):
-                raise ValidationError("Invalid format for 'answer'.")
+                return Response({"error": "Invalid format for 'answer'."},
+                                status=status.HTTP_400_BAD_REQUEST)
             scores = {'EI': 0, 'SN': 0, 'TF': 0, 'JP': 0}
 
             for question_id, option_id in answers.items():
