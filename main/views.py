@@ -19,9 +19,9 @@ class QuestionView(APIView):
 
             serializer = QuestionSerializer(queryset, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        except DatabaseError as e:
+        except DatabaseError:
             return Response(
-                {"error": "Database error occurred while fetching questions.", "details": str(e)},
+                {"error": "Database error occurred while fetching questions."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
@@ -44,7 +44,10 @@ class MbtiView(APIView):
                     dimension = option.question.dimension
                     scores[dimension] += option.score
                 except ObjectDoesNotExist:
-                    return Response({"error": f"Option_id '{option_id}' does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(
+                        {"error": f"Option_id '{option_id}' does not exist."},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
 
             mbti = ''
             for dimension, score in scores.items():
