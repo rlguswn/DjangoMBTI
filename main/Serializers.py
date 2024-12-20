@@ -6,7 +6,7 @@ from main.models import Question, Option, Mbti
 class OptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Option
-        fields = '__all__'
+        fields = ['id', 'text']
 
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -14,10 +14,10 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = '__all__'
+        fields = ['id', 'text', 'options']
 
 
 class MbtiSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mbti
-        fields = '__all__'
+        fields = ['mbti', 'text']
