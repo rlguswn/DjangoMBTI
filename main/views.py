@@ -88,8 +88,16 @@ class MbtiView(APIView):
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
-
-            }
+                'answer': openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    additionalProperties=openapi.Schema(
+                        type=openapi.TYPE_INTEGER,
+                        description='Question id'
+                    ),
+                    description='Option id'
+                )
+            },
+            required=['answer']
         ),
         responses={
             status.HTTP_200_OK: openapi.Response(
