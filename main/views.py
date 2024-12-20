@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 
 from main.Serializers import QuestionSerializer, MbtiSerializer
 from main.models import Question, Option, Mbti
+from main import swaggers as sw
 
 
 # Create your views here.
@@ -18,48 +19,13 @@ class QuestionView(APIView):
         operation_description='질문과 질문에 대한 선택지 불러오기',
         responses={
             status.HTTP_200_OK: openapi.Response(
-                'Success',
-                schema=openapi.Schema(
-                    type=openapi.TYPE_ARRAY,
-                    items=openapi.Schema(
-                        type=openapi.TYPE_OBJECT,
-                        properties={
-                            'id': openapi.Schema(type=openapi.TYPE_INTEGER, description='Qustion id'),
-                            'text': openapi.Schema(type=openapi.TYPE_STRING, description='Question text'),
-                            'options': openapi.Schema(
-                                type=openapi.TYPE_ARRAY,
-                                items=openapi.Schema(
-                                    type=openapi.TYPE_OBJECT,
-                                    properties={
-                                        'id': openapi.Schema(type=openapi.TYPE_INTEGER, description='Option id'),
-                                        'text': openapi.Schema(type=openapi.TYPE_STRING, description='Option text'),
-                                    }
-                                ),
-                                description='Options for Qustion'
-                            )
-                        }
-                    )
-                )
+                'Success', schema=sw.question_view_schema
             ),
             status.HTTP_400_BAD_REQUEST: openapi.Response(
-                'Bad Request', schema=openapi.Schema(
-                    type=openapi.TYPE_OBJECT,
-                    properties={
-                        'error': openapi.Schema(
-                            type=openapi.TYPE_STRING, description='400 error message'
-                        )
-                    }
-                )
+                'Bad Request', schema=sw.status_400_schema
             ),
             status.HTTP_500_INTERNAL_SERVER_ERROR: openapi.Response(
-                'Internal Server Error', schema=openapi.Schema(
-                    type=openapi.TYPE_OBJECT,
-                    properties={
-                        'error': openapi.Schema(
-                            type=openapi.TYPE_STRING, description='500 error message'
-                        )
-                    }
-                )
+                'Internal Server Error', schema=sw.status_500_schema
             )
         }
     )
@@ -84,50 +50,17 @@ class QuestionView(APIView):
 class MbtiView(APIView):
     @swagger_auto_schema(
         operation_id='MbtiView',
-        operation_description='질문과 질문에 대한 선택지 불러오기',
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            properties={
-                'answer': openapi.Schema(
-                    type=openapi.TYPE_OBJECT,
-                    additionalProperties=openapi.Schema(
-                        type=openapi.TYPE_INTEGER,
-                        description='Question id'
-                    ),
-                    description='Option id'
-                )
-            },
-            required=['answer']
-        ),
+        operation_description='MBTI 테스트',
+        request_body=sw.mbti_view_request_schema,
         responses={
             status.HTTP_200_OK: openapi.Response(
-                'Success', schema=openapi.Schema(
-                    type=openapi.TYPE_OBJECT,
-                    properties={
-                        'mbti': openapi.Schema(type=openapi.TYPE_STRING, description='MBTI'),
-                        'text': openapi.Schema(type=openapi.TYPE_STRING, description='MBTI description')
-                    }
-                )
+                'Success', schema=sw.mbti_view_schema
             ),
             status.HTTP_400_BAD_REQUEST: openapi.Response(
-                'Bad Request', schema=openapi.Schema(
-                    type=openapi.TYPE_OBJECT,
-                    properties={
-                        'error': openapi.Schema(
-                            type=openapi.TYPE_STRING, description='400 error message'
-                        )
-                    }
-                )
+                'Bad Request', schema=sw.status_400_schema
             ),
             status.HTTP_500_INTERNAL_SERVER_ERROR: openapi.Response(
-                'Internal Server Error', schema=openapi.Schema(
-                    type=openapi.TYPE_OBJECT,
-                    properties={
-                        'error': openapi.Schema(
-                            type=openapi.TYPE_STRING, description='500 error message'
-                        )
-                    }
-                )
+                'Internal Server Error', schema=sw.status_500_schema
             )
         }
     )
