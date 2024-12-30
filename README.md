@@ -55,14 +55,14 @@
 - 사용자가 MBTI 테스트를 시작하기 전에, API 호출을 통해 질문 목록과 선택지 데이터를 가져옵니다.
 - REST API를 사용하여 JSON 형식으로 데이터를 반환합니다.
 
-<img src="static/assets/포스트맨질문.JPG" alt="postman question" style="border: 2px solid black; border-radius: 4px; width: 50%;">
+<img src="static/assets/포스트맨질문.JPG" alt="postman question" style="border: 2px solid black; border-radius: 4px; width: 80%;">
 
 ## 응답 제출
 - 사용자가 질문에 대한 답변을 선택한 후, API를 통해 데이터를 서버로 제출합니다.
 - 제출 데이터는 {question_id: 선택지_id} 형식의 JSON 객체로 전송됩니다.
 서버는 제출 데이터를 처리한 후, 결과 데이터를 반환합니다.
 
-<img src="static/assets/포스트맨제출.JPG" alt="postman submit" style="border: 2px solid black; border-radius: 4px; width: 50%;">
+<img src="static/assets/포스트맨제출.JPG" alt="postman submit" style="border: 2px solid black; border-radius: 4px; width: 80%;">
 
 ## Swagger API 문서 제공
 - Swagger를 사용하여 프로젝트에 포함된 모든 API의 사용법을 확인할 수 있습니다.
@@ -71,17 +71,17 @@
 </br>
 <figure style="text-align: auto;">
   <figcaption style="margin-top: 8px; font-size: 14px; color: #555;">스웨거 메인페이지</figcaption>
-  <img src="static/assets/스웨거메인.JPG" alt="postman question" style="border: 2px solid black; border-radius: 4px; width: 50%;">
+  <img src="static/assets/스웨거메인.JPG" alt="postman question" style="border: 2px solid black; border-radius: 4px; width: 80%;">
 </figure>
 
 <figure style="text-align: auto;">
   <figcaption style="margin-top: 8px; font-size: 14px; color: #555;">스웨거 질문 불러오기</figcaption>
-  <img src="static/assets/스웨거질문기능.JPG" alt="swagger question" style="border: 2px solid black; border-radius: 4px; width: 50%;">
+  <img src="static/assets/스웨거질문기능.JPG" alt="swagger question" style="border: 2px solid black; border-radius: 4px; width: 80%;">
 </figure>
 
 <figure style="text-align: auto;">
   <figcaption style="margin-top: 8px; font-size: 14px; color: #555;">스웨거 응답 제출</figcaption>
-  <img src="static/assets/스웨거제출.JPG" alt="swagger question" style="border: 2px solid black; border-radius: 4px; width: 50%;">
+  <img src="static/assets/스웨거제출.JPG" alt="swagger question" style="border: 2px solid black; border-radius: 4px; width: 80%;">
 </figure>
 </br>
 
@@ -89,11 +89,11 @@
 - 잘못된 데이터 형식이나 없는 질문 ID로 요청을 보냈을 경우, 서버에서 적절한 에러 메시지와 상태 코드를 반환합니다.
 - 입력 데이터 유효성을 검사하여 서버 안정성을 강화했습니다.
 
-<img src="static/assets/포스트맨400에러.JPG" alt="postman 400 error" style="border: 2px solid black; border-radius: 4px; width: 50%;">
+<img src="static/assets/포스트맨400에러.JPG" alt="postman 400 error" style="border: 2px solid black; border-radius: 4px; width: 80%;">
 
 # 4. 기능별 라이브 데모
 ## 질문 불러오기
-<img src="static/assets/스웨거질문gif.gif" alt="swagger question gif" style="border: 2px solid black; border-radius: 4px; width: 50%;">
+<img src="static/assets/스웨거질문gif.gif" alt="swagger question gif" style="border: 2px solid black; border-radius: 4px; width: 80%;">
 
 ## 응답 제출
-<img src="static/assets/스웨거제출gif.gif" alt="swagger submit gif" style="border: 2px solid black; border-radius: 4px; width: 50%;">
+<img src="static/assets/스웨거제출gif.gif" alt="swagger submit gif" style="border: 2px solid black; border-radius: 4px; width: 80%;">
