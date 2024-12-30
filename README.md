@@ -92,4 +92,8 @@
 <img src="static/assets/포스트맨400에러.JPG" alt="postman 400 error" style="border: 2px solid black; border-radius: 4px; width: 50%;">
 
 # 4. 기능별 라이브 데모
-업데이트 예정
+## 질문 불러오기
+<img src="static/assets/스웨거질문gif.gif" alt="swagger question gif" style="border: 2px solid black; border-radius: 4px; width: 50%;">
+
+## 응답 제출
+<img src="static/assets/스웨거제출gif.gif" alt="swagger submit gif" style="border: 2px solid black; border-radius: 4px; width: 50%;">
